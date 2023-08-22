@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Todos } from './componets/Todos'
-import { type TodoId } from './types'
+import { type Todo as TodoType, type TodoId } from './types'
 
 const mockTodos = [
   {
@@ -28,12 +28,27 @@ const App = (): JSX.Element => {
     setTodos(newTodos)
   }
 
+  const handleCompleted = ({ id, completed }: Pick<TodoType, 'id' | 'completed'>): void => {
+    const newTodos = todos.map(todo => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          completed
+        }
+      }
+      return todo
+    })
+
+    setTodos(newTodos)
+  }
+
   return (
     <div className='todoapp'>
       {
       // Como es TypeScript no te deja pasar un todos que no sea un array.
       }
     <Todos
+      onToggleCompletedTodo={handleCompleted}
       onRemoveTodo={handleRemove}
       todos={todos}/>
     </div>

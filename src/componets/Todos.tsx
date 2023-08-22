@@ -1,9 +1,10 @@
-import { type TodoId, type ListOfTodos } from '../types'
+import { type TodoId, type ListOfTodos, type Todo as TodoType } from '../types'
 import { Todo } from './Todo'
 
 // Estas son las props que vamos a pasarle para typar un Functional Component (React.FC)
 interface Props {
   todos: ListOfTodos
+  onToggleCompletedTodo: ({ id, completed }: Pick<TodoType, 'id' | 'completed'>) => void
   onRemoveTodo: ({ id }: TodoId) => void
 }
 
