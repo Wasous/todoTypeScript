@@ -10,3 +10,6 @@ export type TodoId = Pick<Todo, 'id'>
 export type TodoCompleted = Pick<Todo, 'completed'>
 
 export type ListOfTodos = Todo[]
+
+// Cualquier key del objeto TODO_FILTERS
+export type FilterValue = typeof TODO_FILTERS[keyof typeof TODO_FILTERS]
