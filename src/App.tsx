@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Todos } from './componets/Todos'
-import { type Todo as TodoType, type TodoId, type FilterValue } from './types'
+import { type Todo as TodoType, type TodoId, type FilterValue, type TodoTitle } from './types'
 import { TODO_FILTERS } from './consts'
 import { Footer } from './componets/Footer'
+import { Header } from './componets/Header'
 
 const mockTodos = [
   {
@@ -53,6 +54,10 @@ const App = (): JSX.Element => {
     setFilterSelected(filter)
   }
 
+  const handleRemoveAllCompleted = (): void => {
+    const newTodos = todos.filter(todo => !todo.completed)
+    setTodos(newTodos)
+  }
   const activeCount = todos.filter(todo => !todo.completed).length
   const completedCount = todos.length - activeCount
 
@@ -62,8 +67,20 @@ const App = (): JSX.Element => {
     return todo
   })
 
+  const handleAddTodo = ({ title }: TodoTitle): void => {
+    const newTodo = {
+      title,
+      id: crypto.randomUUID(),
+      completed: false
+    }
+
+    const newTodos = [...todos, newTodo]
+    setTodos(newTodos)
+  }
+
   return (
     <div className='todoapp'>
+      <Header onAddTodo={handleAddTodo}/>
       {
       // Como es TypeScript no te deja pasar un todos que no sea un array.
       }
@@ -74,7 +91,7 @@ const App = (): JSX.Element => {
       <Footer
         activeCount={activeCount}
         completedCount={completedCount}
-        onClearCompleted= {() => {}}
+        onClearCompleted= {handleRemoveAllCompleted}
         filterSelected ={filterSelected}
         handleFilterChange={handleFilterChange}
       />
